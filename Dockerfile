@@ -22,7 +22,7 @@ FROM nginx:alpine
 # Copy the built app from the builder stage to the nginx HTML directory
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Expose port 80 to the outside world
+# Expose port 80 to the outside worl
 EXPOSE 80
 
 # Command to start the Nginx server
