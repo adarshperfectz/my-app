@@ -28,8 +28,8 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
         IMAGE_TAG_LATEST: "latest"
       run: |
-        docker build -t my-docker-image:$IMAGE_TAG .
-        docker push my-docker-image:$IMAGE_TAG
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.0
       with:
@@ -38,10 +38,10 @@ jobs:
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         port: 22 #${{ secrets.PORT }}
         script: |
-          'docker stop my-docker-image || true'
-          'docker rm my-docker-image || true'
-          'docker pull 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest'
-          'docker run -d --name my-docker-image -p 80:3000 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest'
+          # 'docker stop my-docker-image || true'
+          # 'docker rm my-docker-image || true'
+          # 'docker pull 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest'
+          # 'docker run -d --name my-docker-image -p 80:3000 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest'
 
 
 
