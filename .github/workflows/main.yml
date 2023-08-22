@@ -43,5 +43,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         port: 22 #${{ secrets.PORT }}
         script: |
+          sudo docker stop $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LATEST || true
+          sudo docker rm $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LATEST || true
           sudo docker pull 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest
           sudo sudo docker run -d --name my-container -p 80:3000 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest
