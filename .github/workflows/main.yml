@@ -1,7 +1,7 @@
 name: Docker build-push-deploy
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master" ] #change to staging
 env:
   AWS_REGION: "us-east-1"
 jobs:
@@ -14,8 +14,8 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}  #change
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  #change
         aws-region: ${{ env.AWS_REGION }}
     - name: Login to Amazon ECR
       id: login-ecr
@@ -24,7 +24,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: "my-repo"
+        ECR_REPOSITORY: "my-repo"  #change
         IMAGE_TAG: ${{ github.sha }}
         IMAGE_TAG_LATEST: "latest"
       run: |
@@ -34,14 +34,14 @@ jobs:
       uses: appleboy/ssh-action@v1.0.0
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: "my-repo"
+        ECR_REPOSITORY: "my-repo"  #change
         IMAGE_TAG: ${{ github.sha }}
         IMAGE_TAG_LATEST: "latest"
       with:
-        host: 52.71.100.103 #${{ secrets.HOST }}
-        username: ubuntu #${{ secrets.USERNAME }}
-        key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-        port: 22 #${{ secrets.PORT }}
+        host: 52.71.100.103 #${{ secrets.HOST }}  #change
+        username: ubuntu #${{ secrets.USERNAME }}  #change
+        key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}  #change
+        port: 22 #${{ secrets.PORT }}  #change
         script: |
           sudo docker stop my-container || true
           sudo docker rm my-container || true
