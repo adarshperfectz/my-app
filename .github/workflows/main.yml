@@ -38,7 +38,7 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
         IMAGE_TAG_LATEST: "latest"
       with:
-        host: 52.91.237.106 #${{ secrets.HOST }}  #change
+        host: 3.90.227.105 #${{ secrets.HOST }}  #change
         username: ubuntu #${{ secrets.USERNAME }}  #change
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}  #change
         port: 22 #${{ secrets.PORT }}  #change
