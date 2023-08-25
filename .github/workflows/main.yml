@@ -20,16 +20,16 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: "own-repo"  #change
-        IMAGE_TAG: ${{ github.sha }}
-        IMAGE_TAG_LATEST: "latest"
-      run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LATEST .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LATEST
+    # - name: Build, tag, and push image to Amazon ECR
+    #   id: build-image
+    #   env:
+    #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+    #     ECR_REPOSITORY: "own-repo"  #change
+    #     IMAGE_TAG: ${{ github.sha }}
+    #     IMAGE_TAG_LATEST: "latest"
+    #   run: |
+    #     docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LATEST .
+    #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LATEST
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.0
       env:
@@ -38,10 +38,10 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
         IMAGE_TAG_LATEST: "latest"
       with:
-        host: 3.90.227.105 #${{ secrets.HOST }}  #change
+        host: 52.91.218.100 #${{ secrets.HOST }}  #change
         username: ubuntu #${{ secrets.USERNAME }}  #change
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}  #change
         port: 22 #${{ secrets.PORT }}  #change
-        # script: |
-        #   sudo docker pull 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest
-        #   sudo docker run -d --name my-container -p 80:3000 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest
+        script: |
+          sudo docker pull 315809974489.dkr.ecr.us-east-1.amazonaws.com/own-repo:latest
+          sudo docker run -d --name my-container -p 80:3000 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest
