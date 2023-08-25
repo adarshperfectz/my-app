@@ -27,21 +27,21 @@ jobs:
         run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 315809974489.dkr.ecr.us-east-1.amazonaws.com
 
       - name: Tag Docker Image
-        run: docker tag my-docker-image:latest 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest
+        run: docker tag my-docker-image:latest 315809974489.dkr.ecr.us-east-1.amazonaws.com/own-repo:latest
 
       - name: Push Docker Image to ECR
-        run: docker push 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest
+        run: docker push 315809974489.dkr.ecr.us-east-1.amazonaws.com/own-repo:latest
 
       - name: SSH into EC2 Instance
         uses: appleboy/ssh-action@master
         with:
-          host: 3.82.43.14
+          host: 52.91.218.100
           username: ubuntu  # Change this to your EC2 instance username
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
 
       - name: Deploy Docker Container
         run: |
-          ssh ubuntu@3.82.43.14 'docker stop my-docker-image || true'
-          ssh ubuntu@3.82.43.14 'docker rm my-docker-image || true'
-          ssh ubuntu@3.82.43.14 'docker pull 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest'
-          ssh ubuntu@3.82.43.14 'docker run -d --name my-docker-image -p 80:3000 315809974489.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest'
+          ssh ubuntu@52.91.218.100 'sudo docker stop my-docker-image || true'
+          ssh ubuntu@52.91.218.100 'sudo docker rm my-docker-image || true'
+          ssh ubuntu@52.91.218.100 'sudo docker pull 315809974489.dkr.ecr.us-east-1.amazonaws.com/own-repo:latest'
+          ssh ubuntu@52.91.218.100 'sudo docker run -d --name my-docker-image -p 80:3000 315809974489.dkr.ecr.us-east-1.amazonaws.com/own-repo:latest'
