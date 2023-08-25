@@ -44,4 +44,4 @@ jobs:
         port: 22 #${{ secrets.PORT }}  #change
         script: |
           sudo docker pull 315809974489.dkr.ecr.us-east-1.amazonaws.com/own-repo:latest
-          sudo docker run -d --name my-container -p 80:3000 315809974489.dkr.ecr.us-east-1.amazonaws.com/own-repo:latest
+          sudo docker run -d --name my-container -p 80:3000 --env-file "~/secrets/env.txt" 315809974489.dkr.ecr.us-east-1.amazonaws.com/own-repo:latest
