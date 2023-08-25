@@ -16,6 +16,8 @@ COPY . .
 # Build the React app (replace 'build' with your actual build command)
 RUN npm run build
 
+EXPOSE 3000
+
 # Specify the command to start the app (replace 'start' with your actual start command)
 CMD ["npm", "start"]
 
