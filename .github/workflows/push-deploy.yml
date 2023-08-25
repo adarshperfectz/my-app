@@ -41,7 +41,7 @@ jobs:
 
       - name: Deploy Docker Container
         run: |
-          ssh ubuntu@52.91.218.100 'sudo docker stop my-docker-image || true'
-          ssh ubuntu@52.91.218.100 'sudo docker rm my-docker-image || true'
+          # ssh ubuntu@52.91.218.100 'sudo docker stop my-docker-image || true'
+          # ssh ubuntu@52.91.218.100 'sudo docker rm my-docker-image || true'
           ssh ubuntu@52.91.218.100 'sudo docker pull 315809974489.dkr.ecr.us-east-1.amazonaws.com/own-repo:latest'
           ssh ubuntu@52.91.218.100 'sudo docker run -d --name my-docker-image -p 80:3000 315809974489.dkr.ecr.us-east-1.amazonaws.com/own-repo:latest'
